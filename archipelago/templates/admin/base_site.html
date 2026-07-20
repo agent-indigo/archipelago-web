@@ -1,0 +1,16 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+{% block title %}
+  Island Admin Office | {{ request.get_host }} | Archipelago
+{% endblock %}
+{% block branding %}
+  <h1 id="head">
+    {{ request.get_host }} | Island Admin Office | Archipelago
+  </h1>
+{% endblock %}
+{% block extrastyle %}
+  <link
+    rel="stylesheet"
+    href="{% static 'admin.css' %}"
+  />
+{% endblock %}

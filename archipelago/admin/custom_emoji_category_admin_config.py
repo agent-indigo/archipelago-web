@@ -1,0 +1,55 @@
+"""
+Custom emoji category admin config
+"""
+from django.contrib.admin import ModelAdmin
+from django.urls import reverse
+from django.utils.html import format_html
+from ..models import CustomEmojiCategory
+class CustomEmojiCategoryAdminConfig(ModelAdmin):
+    """
+    Custom emoji category admin config
+    """
+    list_display = [
+        'actor',
+        'name',
+        'created_at',
+        'updated_at'
+    ]
+    list_display_links = [
+        'name'
+    ]
+    list_filter = [
+        'actor__display_name',
+        'name',
+        'created_at',
+        'updated_at'
+    ]
+    search_fields = [
+        'actor__display_name',
+        'name',
+        'created_at',
+        'updated_at'
+    ]
+    readonly_fields = [
+        'actor',
+        'created_at',
+        'updated_at'
+    ]
+    list_per_page = 20
+    def actor(
+        self,
+        category: CustomEmojiCategory
+    ):
+        """
+        Link to the actor who created the custom emoji category
+        """
+        return format_html(
+            '<a href="{url}">{name}</a>',
+            url = reverse(
+                'admin:auth_user_change',
+                args = [
+                    category.actor.user.id
+                ]
+            ),
+            name = category.actor.username
+        )
